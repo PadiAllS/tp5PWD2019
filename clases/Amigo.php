@@ -8,10 +8,12 @@ require_once 'Db.php';
 require_once 'IRegistro.php';
 require_once 'NullObjectError.php';
 
+
 use app\clases\NullObjectError;
 use \Exception;
 use app\clases\IRegistro;
 use app\clases\Db;
+use app\clases\SqlHelper;
 use PDO;
 
 class Amigo implements IRegistro {
@@ -114,14 +116,14 @@ class Amigo implements IRegistro {
     }
 
     public static function buscarPorParametros(array $parametros, string $tipo = 'AND'): array {
-//        throw new Exception('Método no implementado');
-       $sql= 'SELECT * FROM amigos WHERE true ';
-        foreach ($parametros as $key => $value) {
-            $sql .= " AND ". $key . "=". $value;
-        }
+
+        $sql = SqlHelper::construirConsulta('amigos', $parametros, $tipo);
+        
         $conexion = Db::getConexion();
         $pst = $conexion->prepare($sql);
-//        $pst->bindValue(':idPersona', $this->idPersona);
+        foreach($parametros as $clave => $valor){
+            $pst->bindValue(":{$clave}", $valor);
+        }
         $pst->execute();
         $resultados = $pst->fetchAll();
         if(count($resultados)>0){

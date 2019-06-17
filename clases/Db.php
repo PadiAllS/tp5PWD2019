@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace app\clases;
+require_once 'SqlHelper.php';
+
 use \PDO;
 class Db
 {

@@ -11,7 +11,7 @@
     </div>
       <form class="navbar-form navbar-left" action="<?= SITE_ROOT ?>index.php">
         <div class="form-group">
-          <input type="text" name="inputBuscarPersonas" id="inputBuscarPersonas" class="form-control" placeholder="Buscar Personas">
+          <input type="text" name="inputBuscarPersonas" id="inputBuscarPersonas" value="<?= $_GET['inputBuscarPersonas'] ?? ''?>" class="form-control" placeholder="Buscar Personas">
         </div>
         <button type="submit" name="btnBuscarPersonas" class="btn btn-default">BUSCAR</button>
       </form>    

@@ -6,10 +6,12 @@ namespace app\clases;
 require_once 'Db.php';
 require_once 'IRegistro.php';
 require_once 'NullObjectError.php';
+require_once 'SqlHelper.php';
 
 use app\clases\Db;
 use app\clases\IRegistro;
 use app\clases\NullObjectError;
+use app\clases\SqlHelper;
 
 class Compania implements IRegistro
 {
@@ -122,13 +124,13 @@ class Compania implements IRegistro
     
     public static function buscarPorParametros(array $parametros, string $tipo='AND'):array
     {
-        //throw new Exception('Método no implementado');
-        $sql= 'SELECT * FROM compania WHERE true ';
-        foreach ($parametros as $key => $value) {
-            $sql .= " AND ". $key . "=". $value;
-        }
+        $sql = SqlHelper::construirConsulta('compania', $parametros, $tipo);
+
         $conexion = Db::getConexion();
         $pst = $conexion->prepare($sql);
+        foreach($parametros as $clave => $valor){
+            $pst->bindValue(":{$clave}", $valor);
+        }
         $pst->execute();
         $resultados = $pst->fetchAll();
         if(count($resultados)>0){

@@ -16,6 +16,7 @@ use app\clases\Amigo;
 use app\clases\Compania;
 use app\clases\IRegistro;
 use app\clases\Db;
+use app\clases\SqlHelper;
 
 class Persona implements IRegistro {
 
@@ -111,32 +112,17 @@ class Persona implements IRegistro {
     }
 
     public static function buscarPorParametros(array $parametros, string $tipo = 'AND'): array {
+        $sql = SqlHelper::construirConsulta('persona', $parametros, $tipo);
         $conexion = Db::getConexion();
-        $sql= 'SELECT * FROM persona WHERE 1 ';
-        foreach ($parametros as $key => $value) {
-            $sql .= " $tipo ". $key . "=". $value;
-        }
-        //
-//        $where="";
-//        if ($parametros){
-//            $where = "WHERE nombre= 'mariano' $tipo apellido='boiselier'";
-//        }
-//        $sql= "select * from persona";
-//        
-//        foreach ($listadoPersonas as $personaArray){
-//            $id=(int)
-//        }
-//        
-        
-        //
-        
         $pst = $conexion->prepare($sql);
-//        $pst->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        foreach($parametros as $clave => $valor){
+            $pst->bindValue(":{$clave}", $valor);
+        }
         $pst->execute();
         $resultados = $pst->fetchAll();
-        if (count($resultados) > 0) {
+        if(count($resultados)>0){
             return $resultados;
-        } else {
+        }else{
             return [];
         }
     }

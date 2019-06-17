@@ -7,9 +7,10 @@ require_once 'clases/Usuario.php';
 use app\clases\Usuario;
 $usuario = new Usuario();
 if(isset($_POST['boton'])  && $usuario->esLoginValido($_POST['username'], $_POST['password'])){
-    echo "login válido";
+    //echo "login válido";
     $_SESSION['usuario']= $_POST['username'];
     header("Location:index.php");
+    exit();
 }else{
     echo "login inválido";
 }

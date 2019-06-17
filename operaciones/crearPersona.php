@@ -25,7 +25,7 @@ if(isset($_POST['btnGuardarPersona']))
         // invocar el método insertar de la persona creada
         $persona1->insertar();
         // crear una instancia de compania desde parámetros usando el método provisto
-        $_POST[id_persona]=$persona1->getId();
+        $_POST['id_persona']=$persona1->getId();
         
         //$cia1 = new Compania($_POST['nombreCia'],$_POST['direccionCia'],$persona1);
         $cia1= Compania::crearDesdeParametros($_POST);
@@ -34,9 +34,9 @@ if(isset($_POST['btnGuardarPersona']))
         // iniciar un bucle, recorriendo el arreglo de amigos
         for($i = 0;$i < count($_POST['nombreAmigo']);$i++)
         {
-            $parametro[apellinom]=$_POST['nombreAmigo'][$i];
-            $parametro[telefono]=$_POST['telefonoAmigo'][$i];
-            $parametro[id_persona]= intval($_POST['id_persona']);
+            $parametro['apellinom']=$_POST['nombreAmigo'][$i];
+            $parametro['telefono']=$_POST['telefonoAmigo'][$i];
+            $parametro['id_persona']= intval($_POST['id_persona']);
             // dentro de cada iteracion crear una instancia de objeto amigo usando el método provisto 
             $amigo= Amigo::crearDesdeParametros($parametro);
             // en la instancia de amigo creada invocar el método insertar

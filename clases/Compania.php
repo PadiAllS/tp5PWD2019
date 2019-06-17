@@ -74,8 +74,7 @@ class Compania implements IRegistro
         $pst->bindValue(':idPersona', $this->idPersona);
         $pst->bindValue(':direccion', $this->direccionCia);
         $pst->execute();
-        $resultados = $pst->fetch();
-        if(count($resultados)===1){
+        if($pst->rowCount()===1){
             $this->setId($conn->lastInsertId());
             return true;
         }else{
@@ -141,7 +140,7 @@ class Compania implements IRegistro
     
     public static function crearDesdeParametros(array $parametros):self
     {
-        $id = intval($parametros['id'])??null;
+        $id = !empty($parametros['id'])?intval($parametros['id']):null;
         $idPersona = intval($parametros['id_persona'])??null;
         $denominacion = $parametros['denominacion']??null;
         $direccion = $parametros['direccionCia']??null;

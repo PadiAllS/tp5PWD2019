@@ -142,7 +142,7 @@ class Persona implements IRegistro {
     }
 
     public static function crearDesdeParametros(array $parametros): self {
-        $id = intval($parametros['id']) ?? null;
+        $id = !empty($parametros['id']) ? intval($parametros['id']):null;
         $nombre = $parametros['nombre'] ?? null;
         $apellido = $parametros['apellido'] ?? null;
         $direccion = $parametros['direccion'] ?? null;

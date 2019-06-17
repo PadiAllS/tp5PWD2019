@@ -134,7 +134,7 @@ class Amigo implements IRegistro {
     
 
     public static function crearDesdeParametros(array $parametros): self {
-        $id = intval($parametros['id']) ?? null;
+        $id = !empty($parametros['id']) ? intval($parametros['id']): null;
         $idPersona = intval($parametros['id_persona']) ?? null;
         $apelliNom = $parametros['apellinom'] ?? null;
         $telefono = $parametros['telefono'] ?? null;
